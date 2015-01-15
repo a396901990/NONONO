@@ -108,8 +108,9 @@ git重置（reset）:
     git reset --mixed           # 同不带任何参数的git reset一样，重置暂存区，但不改变工作区。
     git reset --soft            # 回退到某个版本，不改变暂存区和工作区（如果还要提交，直接commit即可）。
     git reset --hard            # 彻底回退到某个版本，替换暂存区和工作区，本地的源码也会变为上一个版本的内容。
+    
     git reset                   # 将之前用git add命令添加到暂存区的内容撤出暂存区（相当于git add -A 的反向操作）
-    git reset                   # HEAD 效果同上，因为引用重置到HEAD相当与没有重置
-    git reset -- filename       # 将文件撤出暂存区（相当于git add filename的反向操作）
+    git reset HEAD              # HEAD 效果同上，因为引用重置到HEAD相当与没有重置
+    git reset filename          # 将文件撤出暂存区（相当于git add filename的反向操作）
     git reset HEAD^             # 引用回退一次（工作区不变，暂存区回退）
-    git reset –soft HEAD~3      # 引用回退三次（工作区不变，暂存区不变）
+    git reset --soft HEAD~3     # 引用回退三次（工作区不变，暂存区不变）
