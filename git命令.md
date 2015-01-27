@@ -4,19 +4,14 @@ Git命令
 git配置（config）：
 -----------------
     
-    # 查看版本：  
-    git version    
+    git version                                                 # 查看版本：
 
-    # 查看当前配置：  
-    git config -l
+    git config -l                                               # 查看当前配置：
+    git config --global user.name "Dean"                        # 设置用户名，邮箱：  
+    git config --global user.email g.xiangyu1990@gmail.com      # 设置用户名，邮箱：  
 
-    # 设置用户名，邮箱：  
-    git config --global user.name "Dean"  
-    git config --global user.email g.xiangyu1990@gmail.com  
-
-    # 设置git命令的别名
-    git config --global alias.ci commit
-    git config --global alias.co checkout
+    git config --global alias.ci commit                         # 设置git命令的别名
+    git config --global alias.co checkout                       # 设置git命令的别名
 
 git仓库（repository）：
 -------------
