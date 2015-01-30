@@ -4,19 +4,14 @@ Git命令
 git配置（config）：
 -----------------
     
-    # 查看版本：  
-    git version    
+    git version                                                 # 查看版本
 
-    # 查看当前配置：  
-    git config -l
+    git config -l                                               # 查看当前配置
+    git config --global user.name "Dean"                        # 设置用户名，邮箱  
+    git config --global user.email g.xiangyu1990@gmail.com      # 设置用户名，邮箱  
 
-    # 设置用户名，邮箱：  
-    git config --global user.name "Dean"  
-    git config --global user.email g.xiangyu1990@gmail.com  
-
-    # 设置git命令的别名
-    git config --global alias.ci commit
-    git config --global alias.co checkout
+    git config --global alias.ci commit                         # 设置git命令的别名
+    git config --global alias.co checkout                       # 设置git命令的别名
 
 git仓库（repository）：
 -------------
@@ -91,7 +86,7 @@ git查看状态（status）：
     git status -s           # 将结果以简短的形式输出
     git status --ignored    # 显示被忽略的文件
 
-git保存（stash）: 
+git存储（stash）: 
 --------------------------
     
     git stash                   # 保存当前的工作进度
@@ -105,12 +100,53 @@ git保存（stash）:
 git重置（reset）:
 --------------------
 
-    git reset --mixed           # 同不带任何参数的git reset一样，重置暂存区，但不改变工作区。
-    git reset --soft            # 回退到某个版本，不改变暂存区和工作区（如果还要提交，直接commit即可）。
-    git reset --hard            # 彻底回退到某个版本，替换暂存区和工作区，本地的源码也会变为上一个版本的内容。
+    git reset --mixed           # 同不带任何参数的git reset一样，重置暂存区，但不改变工作区
+    git reset --soft            # 回退到某个版本，不改变暂存区和工作区（如果还要提交，直接commit即可）
+    git reset --hard            # 彻底回退到某个版本，替换暂存区和工作区，本地的源码也会变为上一个版本的内容
     
     git reset                   # 将之前用git add命令添加到暂存区的内容撤出暂存区（相当于git add -A 的反向操作）
     git reset HEAD              # HEAD 效果同上，因为引用重置到HEAD相当与没有重置
     git reset filename          # 将文件撤出暂存区（相当于git add filename的反向操作）
     git reset HEAD^             # 引用回退一次（工作区不变，暂存区回退）
     git reset --soft HEAD~3     # 引用回退三次（工作区不变，暂存区不变）
+
+git撤销（revert）：
+-----------------------
+    
+    git revert commit           # 撤销指定commit
+    git revert HEAD             # 撤销上一次commit
+
+
+
+
+git合并（merge）：
+----------------------
+    
+    git merge <branch_name>             # 合并
+    git merge --no-ff <branch_name>     # 采用no fast forward的合并方式，这种方式在合并的同时会生成一个新的commit
+    git merge --abort                   # 尽量回退到merge前的状态（可能会失败）
+
+git重新基变（rebase）：
+-----------------------
+    
+    git rebase <branch_name>    # 
+    git rebase --continue       # 执行rebase出现冲突解决后，执行该命令会继续应用(apply)余下的补丁
+    git rebase --skip           # 跳过当前提交
+    git rebase --abort          # 终止rebase, 分支会回到rebase开始前的状态
+
+git获取/拉（fetch/pull）：
+------------------------
+
+    git fetch               # 从远程获取最新版本到本地，不会自动merge
+    
+    git pull                # 从远程获取最新版本并merge到本地
+    git pull --rebase       # 暂存本地变更，合并远程最新改动，合并刚刚暂存的本地变更（不产生无用的merge的同步）
+
+git推（push）:
+------------------------
+    
+    git push origin master      # 将本地分支推送到origin主机的master分支
+    git push -u origin master   # -u指定origin为默认主机，后面就可以不加任何参数使用git push了
+    git push -f origin          # -f强推，在远程主机产生一个"非直进式"的合并(non-fast-forward merge)
+    git push --all origin       # 将所有本地分支都推送到origin主
+
