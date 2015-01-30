@@ -9,7 +9,6 @@ git配置（config）：
     git config -l                                               # 查看当前配置
     git config --global user.name "Dean"                        # 设置用户名，邮箱  
     git config --global user.email g.xiangyu1990@gmail.com      # 设置用户名，邮箱  
-
     git config --global alias.ci commit                         # 设置git命令的别名
     git config --global alias.co checkout                       # 设置git命令的别名
 
@@ -148,5 +147,3 @@ git推（push）:
     git push -u origin master   # -u指定origin为默认主机，后面就可以不加任何参数使用git push了
     git push -f origin          # -f强推，在远程主机产生一个"非直进式"的合并(non-fast-forward merge)
     git push --all origin       # 将所有本地分支都推送到origin主
-
-
