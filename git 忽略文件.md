@@ -1,116 +1,65 @@
-Git命令
-===========
+git忽略文件：
+==================
 
-git配置（config）：
------------------
-    
-    # 查看版本：  
-    git version    
+git提供了文件忽略系统，当对工作区某个目录或文件设置了忽略后，在执行status查看状态时，被忽略的文件即使存在也不会显示出来。  
+这样我就可以把那些不需要上传，不需要保留的文件或目录忽略掉（比如一些动态生成的log，或者编译出来的文件等等）。
 
-    # 查看当前配置：  
-    git config -l
+对于忽略文件，git提供了3种方式（我们组的大神又告诉我了另一种方法）下面来一一介绍一下：
 
-    # 设置用户名，邮箱：  
-    git config --global user.name "Dean"  
-    git config --global user.email g.xiangyu1990@gmail.com  
+一：.gitignore设置远程共享忽略文件
+============
 
-    # 设置git命令的别名
-    git config --global alias.ci commit
-    git config --global alias.co checkout
-
-git仓库（repository）：
+忽略文件.gitignore使用：
 -------------
-    
-    # 创建一个本地的git仓库并命名：  
-    git init demo
 
-    # 克隆一个远程的git仓库到指定路径：  
-    git clone https://github.com/a396901990/android.git /path/workpsace
+首先可以从文件名看出.gitignore是一个隐藏文件
+一般我们默认会把它建立在仓库的根目录（也可以是仓库下的任意目录）  
+如下：  
+`cd` 到根目录;  
+`ls -a` 查看所有隐藏文件;  
+`vim .gitignore` 创建或编辑.gitignore文件，将需要忽略的文件写在其中;
 
-git分支（branch）:
+
+忽略文件的规则：
+-------------------
+
+**\*.a** 忽略所有以.a为后缀的文件;  
+**!lib.a** 不忽略文件lib.a;  
+**/TODO** 只忽略此目录下TODO文件,子目录的TODO不被忽略;  
+**build/** 忽略build目录下的所有文件;  
+**doc/*.txt** 只忽略doc/下所有的txt文件,但是不忽略doc/subdir/下的txt文件;  
+
+小技巧：
+----------------
+
+1. 文件.gitignore可以放在当前仓库中的任何目录中;  
+2. 忽略只对未跟踪文件有效，对于已经加入版本库的文件无效;  
+3. 如果不希望将.gitignore添加到库里，也不希望.gitignore文件带来任何干扰，可以在忽略文件中忽略自己;  
+
+
+二：本地独享
+=======================
+
+上面设置的.gitignore通常都会上传到远端的版本库中，所以它是“共享式”的，而在有的情况下我们需要有一个自己“独享式”的本地忽略文件。
+
+具体版本库：
+--------------
+
+在该版本库`.git/info/exclude`来设置文件忽略，或者也可以使用.gitignore文件来忽略自己可以达到同样效果
+
+全局版本库：
+-------------
+
+全局忽略是指忽略本地中所有的版本库。  
+通过设置git config:  
+`$ git config --global core.excludefile /dean/.gitignore_global`  
+/dean/.gitignore_global 是一个自定义的忽略文件，这个文件的目录、名字和里面的内容都按不同需求任意设定。
+
+大神告诉的一个方法：
 -----------------
-    
-    git branch                      # 查看分支
-    git remote show origin          # 查看所有分支
-    git branch <branchname>         # 创建新分支
-    git checkout <branchname>       # 切换到分支
-    git checkout -b <new_branch>    # 创建并切换到新分支
-    git branch -d <branchname>      # 删除分支（-D强删） 
-    git branch -m <old> <new>       # 本地分支重命名
 
-git添加（add）：
-------------------
-    
-    git add <file>      # 将本地指定文件名或目录（新增和修改，没有删除）的文件添加到暂存区
-    git add .           # 将本地所有的（新增和修改，没有删除）文件添加到暂存区
-    git add -u          # 将本地的（修改和删除，没有新增）文件添加到暂存区
-    git add -A          # 将本地所有改动添加到暂存区（git add -A = git add . + git add -u）
-    git add -i          # 打开一个交互式界面按需求添加文件
+进入到本机的.config/git中，里面有一个ignore文件。  
+我们在这个文件中加上想要忽略的就可以起到全局忽略的效果。  
+可以使用如下命令很方便：
+`vim .config/git/ignore` 
 
-git删除/重命名（rm/mv）：
------------------
-    
-    git rm <file>                   # 删除文件
-    git rm -r <floder>              # 删除文件夹
-    git rm --cached <file>          # 从版本库中删除文件，但不删除文件      
-
-    git mv <old_name> <new_name>    # 文件重命名
-
-git提交（commit）：
---------------------
-    
-    git commit  -m "comment"           # 提交暂存区中的内容（已经add）并添加注释
-    git commit -a                      # 把修改的文件添加到暂存区（不包括新建(untracked)的文件），然后提交。
-    git commit --amend                 # 修改提交的commit（没有push）
-    git commit --amend -m "comment"    # 修改commit注解
-
-git差异（diff）：
---------------------
-    
-    git diff                     # 查看工作目录（working tree）暂存区（index）的差别
-    git diff --cached            # 查看暂存起来的文件（stage）与并未提交（commit）的差别
-    git diff --staged            # 同上
-    git diff HEAD                # 查看最后一次提交之后的的差别（HEAD代表最近一次commit的信息）
-    git diff --stat              # 查看显示简略结果(文件列表)
-    git diff commit1 commit2     # 对比两次提交的内容（也可以是branch，哈希值）
-
-git查看历史（log）：
-----------------------
-    
-    git log
-    git log -3           # 查看前3次修改
-    git log --oneline    # 一行显示一条log
-    git log -p           # 查看详细修改内容  
-    git log --stat       # 查看提交统计信息
-    git log --graph      # 显示何时出现了分支和合并等信息
-
-git查看状态（status）：
-----------------------------
-    
-    git status              # 查看你的代码在缓存与当前工作目录的状态
-    git status -s           # 将结果以简短的形式输出
-    git status --ignored    # 显示被忽略的文件
-
-git保存（stash）: 
---------------------------
-    
-    git stash                   # 保存当前的工作进度
-    git stash save "message"    # 保存进度加说明
-    git stash list              # 显示进度列表
-    git stash pop               # 恢复最新保存的工作进度，并将恢复的工作进度从存储的列表中删除
-    git stash apply             # 恢复最新保存工作进度，但不删除
-    git stash drop              # 删除一个进度，默认删除最新的
-    git stash clear             # 删除所有
-
-git重置（reset）:
---------------------
-
-    git reset --mixed           # 同不带任何参数的git reset一样，重置暂存区，但不改变工作区。
-    git reset --soft            # 回退到某个版本，不改变暂存区和工作区（如果还要提交，直接commit即可）。
-    git reset --hard            # 彻底回退到某个版本，替换暂存区和工作区，本地的源码也会变为上一个版本的内容。
-    
-    git reset                   # 将之前用git add命令添加到暂存区的内容撤出暂存区（相当于git add -A 的反向操作）
-    git reset HEAD              # HEAD 效果同上，因为引用重置到HEAD相当与没有重置
-    git reset filename          # 将文件撤出暂存区（相当于git add filename的反向操作）
-    git reset HEAD^             # 引用回退一次（工作区不变，暂存区回退）
-    git reset --soft HEAD~3     # 引用回退三次（工作区不变，暂存区不变）
