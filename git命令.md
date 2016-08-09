@@ -117,6 +117,10 @@ git撤销（revert）：
     git revert -no-edit HEAD        # 撤销上一次并直接使用默认注释
     git revert -n HEAD              # 撤销上一次但不commit
 
+git遴选（cherry-pick）：
+----------------------------
+    git cherry-pick <commit_id>     # 用于把另一个本地分支的commit修改应用到当前分支
+
 git合并（merge）：
 ----------------------
     
