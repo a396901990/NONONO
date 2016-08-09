@@ -123,6 +123,7 @@ git合并（merge）：
     git merge <branch_name>             # 合并
     git merge --no-ff <branch_name>     # 采用no fast forward的合并方式，这种方式在合并的同时会生成一个新的commit
     git merge --abort                   # 尽量回退到merge前的状态（可能会失败）
+    git merge --squash <branch_name>    # 将目标分支合并过来但不携带commit信息，执行后最后需要提交一个commit（好处，代码整洁）
 
 git重新基变（rebase）：
 -----------------------
