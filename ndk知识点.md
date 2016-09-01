@@ -256,6 +256,17 @@ if (JNI_FALSE == env->IsSameObject(weakGlobalClazz, nullptr)) {
 ```
 env->DeleteGlobalRef(weakGlobalClazz);
 ```
+##异常处理
+JNI中的一场行为与Java不同，在Java中，当抛出一个异常时，虚拟机将停止执行代码块并进入异常处理。而JNI要求在异常发生后显示地实现异常处理。
+
+```
+jthrowable ex = env->ExceptionOccurred();
+if (0 != ex) {
+    env->ExceptionClear();
+    // exception handler
+}
+```
+###异常的捕获
 
 ##LOG
 NDK开发中JNI时，可以使用`__android_log_print`打印log信息。
